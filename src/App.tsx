@@ -1,45 +1,54 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { OrbitControls } from "@react-three/drei"
+import { Canvas } from "@react-three/fiber"
+import { useControls } from "leva"
+import React from "react"
+import { Vector3 } from "three"
+import "./App.css"
+
+const CustomMesh = (props: {
+  position: [number, number, number] | Vector3
+  material: JSX.Element
+  geometry: JSX.Element
+}) => (
+  <mesh position={props.position}>
+    {props.geometry}
+    {props.material}
+  </mesh>
+)
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { material, geometry, position } = useControls({
+    material: {
+      options: {
+        Phong: <meshPhongMaterial />,
+        Normal: <meshNormalMaterial />,
+        Basic: <meshBasicMaterial />,
+      },
+    },
+    geometry: {
+      options: {
+        Box: <boxGeometry />,
+        Sphere: <sphereGeometry />,
+        Octahedron: <octahedronGeometry />,
+      },
+    },
+    position: [0, 0, 0],
+  })
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div id="canvas-container">
+      <Canvas>
+        <ambientLight intensity={0.4} color="#ededd0" />
+        <directionalLight color="#907fa4" position={[0, 0, 5]} />
+        <CustomMesh
+          position={position}
+          material={material}
+          geometry={geometry}
+        />
+        <OrbitControls />
+      </Canvas>
     </div>
   )
 }
 
-export default App
+export { App }

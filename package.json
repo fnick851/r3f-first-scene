@@ -1,14 +1,17 @@
 {
-  "name": "r3f-first-scene",
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^4.3.3",
+    "@react-three/fiber": "^6.0.21",
+    "@types/three": "^0.128.0",
+    "leva": "^0.9.10",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "three": "^0.128.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
